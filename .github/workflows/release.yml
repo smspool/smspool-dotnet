@@ -5,6 +5,7 @@ on:
     tags: ["v*.*.*"]
 permissions:
   contents: read
+  id-token: write
 jobs:
   release:
     runs-on: ubuntu-24.04
@@ -23,9 +24,14 @@ jobs:
           dotnet-version: "8.0.x"
       - name: Build and call the live API
         run: scripts/smoke.sh
+      - name: Log in to NuGet (trusted publishing, no stored key)
+        id: nuget
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        with:
+          user: smspool
       - name: Publish to NuGet
         run: |
           dotnet pack src/SMSPool/SMSPool.csproj -c Release -o dist
           dotnet nuget push "dist/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.nuget.outputs.NUGET_API_KEY }}

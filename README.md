@@ -55,7 +55,8 @@ Hand-written files are listed in `.openapi-generator-ignore`.
 3. Tag and push: `git tag vX.Y.Z && git push origin vX.Y.Z`.
 
 The Release workflow checks the tag against the version, runs the smoke test and publishes.
-Publishing needs the `NUGET_API_KEY` secret (a nuget.org API key scoped to `SMSPool`).
+NuGet uses trusted publishing (no stored key): the nuget.org policy for the `smspool` account trusts
+this repo's `release.yml` workflow in the `release` environment.
 
 ## License
 
