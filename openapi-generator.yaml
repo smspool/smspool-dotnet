@@ -1,0 +1,14 @@
+generatorName: csharp
+gitHost: github.com
+gitUserId: smspool
+gitRepoId: smspool-dotnet
+additionalProperties:
+  packageName: SMSPool
+  packageVersion: 0.1.0
+  targetFramework: net8.0;netstandard2.0
+  library: httpclient
+  packageAuthors: SMSPool
+  packageCompany: SMSPool
+  packageTitle: SMSPool API client
+  packageDescription: Official .NET client for the SMSPool API (https://api.smspool.net/docs).
+  licenseId: MIT
