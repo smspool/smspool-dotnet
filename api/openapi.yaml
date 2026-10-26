@@ -19,9 +19,11 @@ tags:
 - name: Carrier
 - description: These endpoints can only be reached by business accounts.
   name: Business
-- description: "Introduction to the eSIM API usage. Here's a step-to-step process\
-    \ on how to streamline your eSIM purchases:\n\n1. Retrieve the country list from\
-    \ **View eSIM countries**\n    \n2. Retrieve the plans per country using the **countryCode**\n\
+- description: "> **eSIMs have moved to [SIMJuno](https://simjuno.com).** Buy new\
+    \ data-only eSIMs on SIMJuno. The endpoints below remain for eSIMs bought on SMSPool.\n\
+    \nIntroduction to the eSIM API usage. Here's a step-to-step process on how to\
+    \ streamline your eSIM purchases:\n\n1. Retrieve the country list from **View\
+    \ eSIM countries**\n    \n2. Retrieve the plans per country using the **countryCode**\n\
     \    \n3. Create your first purchase using the **Purchase eSIM**\n    \n4. Retrieve\
     \ the **transactionId** from **Purchase eSIM**\n    \n5. Use the **View eSIM profile**\
     \ endpoint to retrieve the QR code, or the access URL in order to install the\
@@ -3763,6 +3765,92 @@ paths:
       summary: Bulk generate vouchers
       tags:
       - Voucher
+  /request/history_search:
+    post:
+      description: "_Not documented yet: the parameters below come straight from the\
+        \ code._"
+      operationId: request_history_search
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/request_history_search_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: JSON response
+        "401":
+          content:
+            application/json:
+              example:
+                success: 0
+                errors:
+                - message: Invalid API key
+                  param: key
+              schema: {}
+          description: Malformed API key
+        "403":
+          content:
+            application/json:
+              example:
+                success: 0
+                errors:
+                - message: Invalid API key
+                  param: key
+              schema: {}
+          description: Unknown or revoked API key
+      security:
+      - bearerAuth: []
+      summary: History search
+      tags:
+      - Information
+      x-undocumented: true
+  /sms/archive:
+    post:
+      description: "_Not documented yet: the parameters below come straight from the\
+        \ code._"
+      operationId: sms_archive
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/sms_archive_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: JSON response
+        "401":
+          content:
+            application/json:
+              example:
+                success: 0
+                errors:
+                - message: Invalid API key
+                  param: key
+              schema: {}
+          description: Malformed API key
+        "403":
+          content:
+            application/json:
+              example:
+                success: 0
+                errors:
+                - message: Invalid API key
+                  param: key
+              schema: {}
+          description: Unknown or revoked API key
+      security:
+      - bearerAuth: []
+      summary: Archive
+      tags:
+      - SMS
+      x-undocumented: true
 components:
   schemas:
     request_pricing_request:
@@ -4146,6 +4234,17 @@ components:
           example: transactionId
           type: string
       type: object
+    request_history_search_request:
+      properties:
+        search:
+          type: string
+        cursor:
+          type: string
+        limit:
+          type: integer
+      required:
+      - search
+      type: object
     voucher_generate_request:
       properties:
         amount:
@@ -4278,6 +4377,13 @@ components:
           type: string
       required:
       - rental_code
+      type: object
+    sms_archive_request:
+      properties:
+        orderid:
+          type: string
+      required:
+      - orderid
       type: object
     request_price_request:
       properties:

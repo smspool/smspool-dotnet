@@ -8,6 +8,7 @@ All URIs are relative to *https://api.smspool.net*
 | [**PoolRetrieveAll**](InformationApi.md#poolretrieveall) | **POST** /pool/retrieve_all | Pool list |
 | [**PoolRetrieveValid**](InformationApi.md#poolretrievevalid) | **POST** /pool/retrieve_valid | Suggested Pools |
 | [**RequestBalance**](InformationApi.md#requestbalance) | **POST** /request/balance | Balance |
+| [**RequestHistorySearch**](InformationApi.md#requesthistorysearch) | **POST** /request/history_search | History search |
 | [**RequestSuccessRate**](InformationApi.md#requestsuccessrate) | **POST** /request/success_rate | Retrieve country success rates per service |
 | [**RequestSuggestedCountries**](InformationApi.md#requestsuggestedcountries) | **POST** /request/suggested_countries | Suggested Countries |
 | [**ServiceRetrieveAll**](InformationApi.md#serviceretrieveall) | **GET** /service/retrieve_all | Service list |
@@ -392,6 +393,110 @@ This endpoint does not need any parameter.
 | **400** | Error |  -  |
 | **401** | Malformed API key |  -  |
 | **403** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="requesthistorysearch"></a>
+# **RequestHistorySearch**
+> Object RequestHistorySearch (string search, string cursor = null, int? limit = null)
+
+History search
+
+_Not documented yet: the parameters below come straight from the code._
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using SMSPool.Api;
+using SMSPool.Client;
+using SMSPool.Model;
+
+namespace Example
+{
+    public class RequestHistorySearchExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.smspool.net";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new InformationApi(httpClient, config, httpClientHandler);
+            var search = "search_example";  // string | 
+            var cursor = "cursor_example";  // string |  (optional) 
+            var limit = 56;  // int? |  (optional) 
+
+            try
+            {
+                // History search
+                Object result = apiInstance.RequestHistorySearch(search, cursor, limit);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling InformationApi.RequestHistorySearch: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the RequestHistorySearchWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // History search
+    ApiResponse<Object> response = apiInstance.RequestHistorySearchWithHttpInfo(search, cursor, limit);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling InformationApi.RequestHistorySearchWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **search** | **string** |  |  |
+| **cursor** | **string** |  | [optional]  |
+| **limit** | **int?** |  | [optional]  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | JSON response |  -  |
+| **401** | Malformed API key |  -  |
+| **403** | Unknown or revoked API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

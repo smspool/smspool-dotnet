@@ -113,6 +113,31 @@ namespace SMSPool.Api
         /// <returns>ApiResponse of Object</returns>
         ApiResponse<Object> RequestBalanceWithHttpInfo();
         /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>Object</returns>
+        Object RequestHistorySearch(string search, string cursor = default, int? limit = default);
+
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> RequestHistorySearchWithHttpInfo(string search, string cursor = default, int? limit = default);
+        /// <summary>
         /// Retrieve country success rates per service
         /// </summary>
         /// <remarks>
@@ -280,6 +305,33 @@ namespace SMSPool.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> RequestBalanceWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> RequestHistorySearchAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> RequestHistorySearchWithHttpInfoAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Retrieve country success rates per service
         /// </summary>
@@ -1040,6 +1092,159 @@ namespace SMSPool.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RequestBalance", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>Object</returns>
+        public Object RequestHistorySearch(string search, string cursor = default, int? limit = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = RequestHistorySearchWithHttpInfo(search, cursor, limit);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        public SMSPool.Client.ApiResponse<Object> RequestHistorySearchWithHttpInfo(string search, string cursor = default, int? limit = default)
+        {
+            // verify the required parameter 'search' is set
+            if (search == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'search' when calling InformationApi->RequestHistorySearch");
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("search", SMSPool.Client.ClientUtils.ParameterToString(search)); // form parameter
+            if (cursor != null)
+            {
+                localVarRequestOptions.FormParameters.Add("cursor", SMSPool.Client.ClientUtils.ParameterToString(cursor)); // form parameter
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.FormParameters.Add("limit", SMSPool.Client.ClientUtils.ParameterToString(limit)); // form parameter
+            }
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Object>("/request/history_search", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestHistorySearch", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> RequestHistorySearchAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = await RequestHistorySearchWithHttpInfoAsync(search, cursor, limit, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> RequestHistorySearchWithHttpInfoAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'search' is set
+            if (search == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'search' when calling InformationApi->RequestHistorySearch");
+
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("search", SMSPool.Client.ClientUtils.ParameterToString(search)); // form parameter
+            if (cursor != null)
+            {
+                localVarRequestOptions.FormParameters.Add("cursor", SMSPool.Client.ClientUtils.ParameterToString(cursor)); // form parameter
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.FormParameters.Add("limit", SMSPool.Client.ClientUtils.ParameterToString(limit)); // form parameter
+            }
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/request/history_search", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestHistorySearch", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
