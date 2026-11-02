@@ -200,6 +200,27 @@ namespace SMSPool.Api
         /// <returns>ApiResponse of Object</returns>
         ApiResponse<Object> SmsAllStockWithHttpInfo(string country = default, string service = default, string pool = default);
         /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>Object</returns>
+        Object SmsArchive(string orderid);
+
+        /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> SmsArchiveWithHttpInfo(string orderid);
+        /// <summary>
         /// Cancel SMS
         /// </summary>
         /// <remarks>
@@ -621,6 +642,29 @@ namespace SMSPool.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> SmsAllStockWithHttpInfoAsync(string country = default, string service = default, string pool = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> SmsArchiveAsync(string orderid, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> SmsArchiveWithHttpInfoAsync(string orderid, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Cancel SMS
         /// </summary>
@@ -2131,6 +2175,135 @@ namespace SMSPool.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SmsAllStock", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>Object</returns>
+        public Object SmsArchive(string orderid)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = SmsArchiveWithHttpInfo(orderid);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>ApiResponse of Object</returns>
+        public SMSPool.Client.ApiResponse<Object> SmsArchiveWithHttpInfo(string orderid)
+        {
+            // verify the required parameter 'orderid' is set
+            if (orderid == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'orderid' when calling SMSApi->SmsArchive");
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("orderid", SMSPool.Client.ClientUtils.ParameterToString(orderid)); // form parameter
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Object>("/sms/archive", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("SmsArchive", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> SmsArchiveAsync(string orderid, System.Threading.CancellationToken cancellationToken = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = await SmsArchiveWithHttpInfoAsync(orderid, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> SmsArchiveWithHttpInfoAsync(string orderid, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orderid' is set
+            if (orderid == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'orderid' when calling SMSApi->SmsArchive");
+
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("orderid", SMSPool.Client.ClientUtils.ParameterToString(orderid)); // form parameter
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/sms/archive", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("SmsArchive", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
