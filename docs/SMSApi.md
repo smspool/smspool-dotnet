@@ -11,6 +11,7 @@ All URIs are relative to *https://api.smspool.net*
 | [**RequestHistory**](SMSApi.md#requesthistory) | **POST** /request/history | Order History |
 | [**SmsActivate**](SMSApi.md#smsactivate) | **POST** /sms/activate | Activate SMS |
 | [**SmsAllStock**](SMSApi.md#smsallstock) | **POST** /sms/all_stock | One-time stock for all services |
+| [**SmsArchive**](SMSApi.md#smsarchive) | **POST** /sms/archive | Archive |
 | [**SmsCancel**](SMSApi.md#smscancel) | **POST** /sms/cancel | Cancel SMS |
 | [**SmsCancelAll**](SMSApi.md#smscancelall) | **POST** /sms/cancel_all | Cancel All SMS |
 | [**SmsCheck**](SMSApi.md#smscheck) | **POST** /sms/check | Check SMS |
@@ -24,7 +25,7 @@ All URIs are relative to *https://api.smspool.net*
 
 <a id="purchasesms"></a>
 # **PurchaseSms**
-> Object PurchaseSms (string service, string country = null, string pool = null, decimal? maxPrice = null, int? pricingOption = null, int? quantity = null, string areacode = null, int? exclude = null, int? createToken = null, string activationType = null, int? carrier = null, int? phonenumber = null, int? software = null)
+> Object PurchaseSms (string service, string country = null, string pool = null, decimal? maxPrice = null, int? pricingOption = null, int? quantity = null, string areacode = null, int? exclude = null, int? createToken = null, string activationType = null, int? carrier = null, int? phonenumber = null, int? autoCountry = null, int? software = null)
 
 Order SMS
 
@@ -64,12 +65,13 @@ namespace Example
             var activationType = "activationType_example";  // string | Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional) 
             var carrier = 56;  // int? | Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional) 
             var phonenumber = 56;  // int? | In case you want to select a specific phone number to order (optional) 
+            var autoCountry = 56;  // int? | Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request's IP resolves to; with pricing_option=1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional) 
             var software = 56;  // int? |  (optional) 
 
             try
             {
                 // Order SMS
-                Object result = apiInstance.PurchaseSms(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, software);
+                Object result = apiInstance.PurchaseSms(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, autoCountry, software);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -90,7 +92,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Order SMS
-    ApiResponse<Object> response = apiInstance.PurchaseSmsWithHttpInfo(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, software);
+    ApiResponse<Object> response = apiInstance.PurchaseSmsWithHttpInfo(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, autoCountry, software);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -119,6 +121,7 @@ catch (ApiException e)
 | **activationType** | **string** | Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. | [optional]  |
 | **carrier** | **int?** | Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) | [optional]  |
 | **phonenumber** | **int?** | In case you want to select a specific phone number to order | [optional]  |
+| **autoCountry** | **int?** | Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. | [optional]  |
 | **software** | **int?** |  | [optional]  |
 
 ### Return type
@@ -358,6 +361,9 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.smspool.net";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
@@ -417,7 +423,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -429,6 +435,8 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | JSON response |  -  |
+| **401** | Malformed API key |  -  |
+| **403** | Unknown or revoked API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -734,6 +742,106 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="smsarchive"></a>
+# **SmsArchive**
+> Object SmsArchive (string orderid)
+
+Archive
+
+_Not documented yet: the parameters below come straight from the code._
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using SMSPool.Api;
+using SMSPool.Client;
+using SMSPool.Model;
+
+namespace Example
+{
+    public class SmsArchiveExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.smspool.net";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new SMSApi(httpClient, config, httpClientHandler);
+            var orderid = "orderid_example";  // string | 
+
+            try
+            {
+                // Archive
+                Object result = apiInstance.SmsArchive(orderid);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling SMSApi.SmsArchive: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the SmsArchiveWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Archive
+    ApiResponse<Object> response = apiInstance.SmsArchiveWithHttpInfo(orderid);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling SMSApi.SmsArchiveWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orderid** | **string** |  |  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | JSON response |  -  |
+| **401** | Malformed API key |  -  |
+| **403** | Unknown or revoked API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1243,7 +1351,7 @@ This endpoint does not need any parameter.
 
 Missed SMS
 
-Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. `url`, `code` and `email` hold the first link, code and email address found in the message, or an empty string.
+Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. `url`, `code` and `email` hold the first link, code and email address found in the message, or an empty string.
 
 ### Example
 ```csharp

@@ -2909,6 +2909,12 @@ namespace SMSPool.Api
                 localVarRequestOptions.FormParameters.Add("service_id", SMSPool.Client.ClientUtils.ParameterToString(serviceId)); // form parameter
             }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Object>("/rental/stock", localVarRequestOptions, this.Configuration);
@@ -2974,6 +2980,12 @@ namespace SMSPool.Api
                 localVarRequestOptions.FormParameters.Add("service_id", SMSPool.Client.ClientUtils.ParameterToString(serviceId)); // form parameter
             }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
