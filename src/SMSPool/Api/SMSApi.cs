@@ -42,9 +42,10 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <returns>Object</returns>
-        Object PurchaseSms(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default);
+        Object PurchaseSms(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default);
 
         /// <summary>
         /// Order SMS
@@ -65,9 +66,10 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> PurchaseSmsWithHttpInfo(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default);
+        ApiResponse<Object> PurchaseSmsWithHttpInfo(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default);
         /// <summary>
         /// Active orders
         /// </summary>
@@ -200,6 +202,27 @@ namespace SMSPool.Api
         /// <returns>ApiResponse of Object</returns>
         ApiResponse<Object> SmsAllStockWithHttpInfo(string country = default, string service = default, string pool = default);
         /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>Object</returns>
+        Object SmsArchive(string orderid);
+
+        /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> SmsArchiveWithHttpInfo(string orderid);
+        /// <summary>
         /// Cancel SMS
         /// </summary>
         /// <remarks>
@@ -310,7 +333,7 @@ namespace SMSPool.Api
         /// Missed SMS
         /// </summary>
         /// <remarks>
-        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </remarks>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -322,7 +345,7 @@ namespace SMSPool.Api
         /// Missed SMS
         /// </summary>
         /// <remarks>
-        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </remarks>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -447,10 +470,11 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> PurchaseSmsAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> PurchaseSmsAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Order SMS
@@ -471,10 +495,11 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PurchaseSmsWithHttpInfoAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> PurchaseSmsWithHttpInfoAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Active orders
         /// </summary>
@@ -622,6 +647,29 @@ namespace SMSPool.Api
         /// <returns>Task of ApiResponse (Object)</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> SmsAllStockWithHttpInfoAsync(string country = default, string service = default, string pool = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> SmsArchiveAsync(string orderid, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Archive
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> SmsArchiveWithHttpInfoAsync(string orderid, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
         /// Cancel SMS
         /// </summary>
         /// <remarks>
@@ -742,7 +790,7 @@ namespace SMSPool.Api
         /// Missed SMS
         /// </summary>
         /// <remarks>
-        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </remarks>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -755,7 +803,7 @@ namespace SMSPool.Api
         /// Missed SMS
         /// </summary>
         /// <remarks>
-        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </remarks>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -1090,11 +1138,12 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <returns>Object</returns>
-        public Object PurchaseSms(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default)
+        public Object PurchaseSms(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default)
         {
-            SMSPool.Client.ApiResponse<Object> localVarResponse = PurchaseSmsWithHttpInfo(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, software);
+            SMSPool.Client.ApiResponse<Object> localVarResponse = PurchaseSmsWithHttpInfo(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, autoCountry, software);
             return localVarResponse.Data;
         }
 
@@ -1114,9 +1163,10 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public SMSPool.Client.ApiResponse<Object> PurchaseSmsWithHttpInfo(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default)
+        public SMSPool.Client.ApiResponse<Object> PurchaseSmsWithHttpInfo(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default)
         {
             // verify the required parameter 'service' is set
             if (service == null)
@@ -1183,6 +1233,10 @@ namespace SMSPool.Api
             if (phonenumber != null)
             {
                 localVarRequestOptions.FormParameters.Add("phonenumber", SMSPool.Client.ClientUtils.ParameterToString(phonenumber)); // form parameter
+            }
+            if (autoCountry != null)
+            {
+                localVarRequestOptions.FormParameters.Add("auto_country", SMSPool.Client.ClientUtils.ParameterToString(autoCountry)); // form parameter
             }
             if (software != null)
             {
@@ -1224,12 +1278,13 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> PurchaseSmsAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> PurchaseSmsAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            SMSPool.Client.ApiResponse<Object> localVarResponse = await PurchaseSmsWithHttpInfoAsync(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, software, cancellationToken).ConfigureAwait(false);
+            SMSPool.Client.ApiResponse<Object> localVarResponse = await PurchaseSmsWithHttpInfoAsync(service, country, pool, maxPrice, pricingOption, quantity, areacode, exclude, createToken, activationType, carrier, phonenumber, autoCountry, software, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1249,10 +1304,11 @@ namespace SMSPool.Api
         /// <param name="activationType">Options: SMS, VOICE, FLASH. SMS will receive regular SMS, VOICE will receive phone calls that mentions the SMS and FLASH is for FLASH calls for verification. (optional)</param>
         /// <param name="carrier">Options: 1 or 2. Pick a carrier (only works for pool Foxtrot US) (optional)</param>
         /// <param name="phonenumber">In case you want to select a specific phone number to order (optional)</param>
+        /// <param name="autoCountry">Set to 1 to let SMSPool pick the country: every country with stock is scored on its measured success rate (weighed down when little stock backs it, minus a little per dollar; countries with no order history are left out unless nothing else has stock) with a bonus for a local number, the country your request&#39;s IP resolves to; with pricing_option&#x3D;1 the cheapest country close to the best score wins. Ignored when country is sent. The response then carries auto_country with the chosen country and the reason. (optional)</param>
         /// <param name="software"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> PurchaseSmsWithHttpInfoAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? software = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> PurchaseSmsWithHttpInfoAsync(string service, string country = default, string pool = default, decimal? maxPrice = default, int? pricingOption = default, int? quantity = default, string areacode = default, int? exclude = default, int? createToken = default, string activationType = default, int? carrier = default, int? phonenumber = default, int? autoCountry = default, int? software = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'service' is set
             if (service == null)
@@ -1321,6 +1377,10 @@ namespace SMSPool.Api
             if (phonenumber != null)
             {
                 localVarRequestOptions.FormParameters.Add("phonenumber", SMSPool.Client.ClientUtils.ParameterToString(phonenumber)); // form parameter
+            }
+            if (autoCountry != null)
+            {
+                localVarRequestOptions.FormParameters.Add("auto_country", SMSPool.Client.ClientUtils.ParameterToString(autoCountry)); // form parameter
             }
             if (software != null)
             {
@@ -1630,6 +1690,12 @@ namespace SMSPool.Api
             localVarRequestOptions.FormParameters.Add("country", SMSPool.Client.ClientUtils.ParameterToString(country)); // form parameter
             localVarRequestOptions.FormParameters.Add("pool", SMSPool.Client.ClientUtils.ParameterToString(pool)); // form parameter
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Object>("/request/areacodes", localVarRequestOptions, this.Configuration);
@@ -1704,6 +1770,12 @@ namespace SMSPool.Api
             localVarRequestOptions.FormParameters.Add("country", SMSPool.Client.ClientUtils.ParameterToString(country)); // form parameter
             localVarRequestOptions.FormParameters.Add("pool", SMSPool.Client.ClientUtils.ParameterToString(pool)); // form parameter
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -2131,6 +2203,135 @@ namespace SMSPool.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SmsAllStock", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>Object</returns>
+        public Object SmsArchive(string orderid)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = SmsArchiveWithHttpInfo(orderid);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <returns>ApiResponse of Object</returns>
+        public SMSPool.Client.ApiResponse<Object> SmsArchiveWithHttpInfo(string orderid)
+        {
+            // verify the required parameter 'orderid' is set
+            if (orderid == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'orderid' when calling SMSApi->SmsArchive");
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("orderid", SMSPool.Client.ClientUtils.ParameterToString(orderid)); // form parameter
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Object>("/sms/archive", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("SmsArchive", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> SmsArchiveAsync(string orderid, System.Threading.CancellationToken cancellationToken = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = await SmsArchiveWithHttpInfoAsync(orderid, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Archive _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orderid"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> SmsArchiveWithHttpInfoAsync(string orderid, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orderid' is set
+            if (orderid == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'orderid' when calling SMSApi->SmsArchive");
+
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("orderid", SMSPool.Client.ClientUtils.ParameterToString(orderid)); // form parameter
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/sms/archive", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("SmsArchive", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -2785,7 +2986,7 @@ namespace SMSPool.Api
         }
 
         /// <summary>
-        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </summary>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -2798,7 +2999,7 @@ namespace SMSPool.Api
         }
 
         /// <summary>
-        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </summary>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -2852,7 +3053,7 @@ namespace SMSPool.Api
         }
 
         /// <summary>
-        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </summary>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>
@@ -2866,7 +3067,7 @@ namespace SMSPool.Api
         }
 
         /// <summary>
-        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes or Hark reward payouts. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
+        /// Missed SMS Some messages arrive on a number from your one-time orders but cannot finish the order, such as Ticketmaster and Seated codes, Hark reward payouts or Neon Money Talks messages. This returns those messages, the same ones the Missed SMS tool on the website shows. Only numbers from pool Foxtrot are covered.  The newest messages come first. &#x60;url&#x60;, &#x60;code&#x60; and &#x60;email&#x60; hold the first link, code and email address found in the message, or an empty string.
         /// </summary>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="phonenumber">Only return messages for this number, including the country code. Leave it out for all your numbers. (optional)</param>

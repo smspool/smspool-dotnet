@@ -94,6 +94,29 @@ namespace SMSPool.Api
         /// <returns>ApiResponse of Object</returns>
         ApiResponse<Object> PoolRetrieveValidWithHttpInfo(string service, string country, string web = default, string includeStock = default);
         /// <summary>
+        /// Pick the best country for a service
+        /// </summary>
+        /// <remarks>
+        /// Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <returns>Object</returns>
+        Object RequestAutoCountry(string service, int? pricingOption = default);
+
+        /// <summary>
+        /// Pick the best country for a service
+        /// </summary>
+        /// <remarks>
+        /// Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> RequestAutoCountryWithHttpInfo(string service, int? pricingOption = default);
+        /// <summary>
         /// Balance
         /// </summary>
         /// <remarks>
@@ -112,6 +135,31 @@ namespace SMSPool.Api
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of Object</returns>
         ApiResponse<Object> RequestBalanceWithHttpInfo();
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>Object</returns>
+        Object RequestHistorySearch(string search, string cursor = default, int? limit = default);
+
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> RequestHistorySearchWithHttpInfo(string search, string cursor = default, int? limit = default);
         /// <summary>
         /// Retrieve country success rates per service
         /// </summary>
@@ -260,6 +308,31 @@ namespace SMSPool.Api
         /// <returns>Task of ApiResponse (Object)</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> PoolRetrieveValidWithHttpInfoAsync(string service, string country, string web = default, string includeStock = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
+        /// Pick the best country for a service
+        /// </summary>
+        /// <remarks>
+        /// Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> RequestAutoCountryAsync(string service, int? pricingOption = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Pick the best country for a service
+        /// </summary>
+        /// <remarks>
+        /// Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> RequestAutoCountryWithHttpInfoAsync(string service, int? pricingOption = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
         /// Balance
         /// </summary>
         /// <remarks>
@@ -280,6 +353,33 @@ namespace SMSPool.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> RequestBalanceWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> RequestHistorySearchAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// History search
+        /// </summary>
+        /// <remarks>
+        /// _Not documented yet: the parameters below come straight from the code._
+        /// </remarks>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> RequestHistorySearchWithHttpInfoAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Retrieve country success rates per service
         /// </summary>
@@ -934,6 +1034,135 @@ namespace SMSPool.Api
         }
 
         /// <summary>
+        /// Pick the best country for a service Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <returns>Object</returns>
+        public Object RequestAutoCountry(string service, int? pricingOption = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = RequestAutoCountryWithHttpInfo(service, pricingOption);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Pick the best country for a service Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        public SMSPool.Client.ApiResponse<Object> RequestAutoCountryWithHttpInfo(string service, int? pricingOption = default)
+        {
+            // verify the required parameter 'service' is set
+            if (service == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'service' when calling InformationApi->RequestAutoCountry");
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("service", SMSPool.Client.ClientUtils.ParameterToString(service)); // form parameter
+            if (pricingOption != null)
+            {
+                localVarRequestOptions.FormParameters.Add("pricing_option", SMSPool.Client.ClientUtils.ParameterToString(pricingOption)); // form parameter
+            }
+
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Object>("/request/auto_country", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestAutoCountry", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Pick the best country for a service Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> RequestAutoCountryAsync(string service, int? pricingOption = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = await RequestAutoCountryWithHttpInfoAsync(service, pricingOption, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Pick the best country for a service Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order&#39;s \&quot;Pick for me\&quot;). It sends an HTTP POST request to the URL &#x60;https://api.smspool.net/request/auto_country&#x60;.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request&#39;s IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With &#x60;pricing_option&#x3D;1&#x60; the cheapest country within reach of the best score wins instead.  Send &#x60;auto_country&#x3D;1&#x60; to &#x60;/purchase/sms&#x60; to order with the same choice in one call.
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="service">Service name or service ID which can be retrieved at the /service/retrieve_all endpoint</param>
+        /// <param name="pricingOption">Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> RequestAutoCountryWithHttpInfoAsync(string service, int? pricingOption = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'service' is set
+            if (service == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'service' when calling InformationApi->RequestAutoCountry");
+
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("service", SMSPool.Client.ClientUtils.ParameterToString(service)); // form parameter
+            if (pricingOption != null)
+            {
+                localVarRequestOptions.FormParameters.Add("pricing_option", SMSPool.Client.ClientUtils.ParameterToString(pricingOption)); // form parameter
+            }
+
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/request/auto_country", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestAutoCountry", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
         /// Balance This HTTP POST request is used to retrieve the balance for a specific SMSPool. The request is sent to the URL &#x60;https://api.smspool.net/request/balance&#x60;.  ### Request Parameters  This request require the \\&#x60;key\\&#x60; param which is your API key  ### Response  The response to this request will have a status code of 200 if the request is successful. The response body will be in JSON format and will include a &#x60;balance&#x60; field. However, the last execution of this request returned an empty string for the &#x60;balance&#x60; field.  Please note that the actual value of the &#x60;balance&#x60; field may vary depending on the user and its configuration.
         /// </summary>
         /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
@@ -1040,6 +1269,159 @@ namespace SMSPool.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RequestBalance", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>Object</returns>
+        public Object RequestHistorySearch(string search, string cursor = default, int? limit = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = RequestHistorySearchWithHttpInfo(search, cursor, limit);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        public SMSPool.Client.ApiResponse<Object> RequestHistorySearchWithHttpInfo(string search, string cursor = default, int? limit = default)
+        {
+            // verify the required parameter 'search' is set
+            if (search == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'search' when calling InformationApi->RequestHistorySearch");
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("search", SMSPool.Client.ClientUtils.ParameterToString(search)); // form parameter
+            if (cursor != null)
+            {
+                localVarRequestOptions.FormParameters.Add("cursor", SMSPool.Client.ClientUtils.ParameterToString(cursor)); // form parameter
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.FormParameters.Add("limit", SMSPool.Client.ClientUtils.ParameterToString(limit)); // form parameter
+            }
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<Object>("/request/history_search", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestHistorySearch", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> RequestHistorySearchAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            SMSPool.Client.ApiResponse<Object> localVarResponse = await RequestHistorySearchWithHttpInfoAsync(search, cursor, limit, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// History search _Not documented yet: the parameters below come straight from the code._
+        /// </summary>
+        /// <exception cref="SMSPool.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="search"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async System.Threading.Tasks.Task<SMSPool.Client.ApiResponse<Object>> RequestHistorySearchWithHttpInfoAsync(string search, string cursor = default, int? limit = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'search' is set
+            if (search == null)
+                throw new SMSPool.Client.ApiException(400, "Missing required parameter 'search' when calling InformationApi->RequestHistorySearch");
+
+
+            SMSPool.Client.RequestOptions localVarRequestOptions = new SMSPool.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/x-www-form-urlencoded"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = SMSPool.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = SMSPool.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.FormParameters.Add("search", SMSPool.Client.ClientUtils.ParameterToString(search)); // form parameter
+            if (cursor != null)
+            {
+                localVarRequestOptions.FormParameters.Add("cursor", SMSPool.Client.ClientUtils.ParameterToString(cursor)); // form parameter
+            }
+            if (limit != null)
+            {
+                localVarRequestOptions.FormParameters.Add("limit", SMSPool.Client.ClientUtils.ParameterToString(limit)); // form parameter
+            }
+
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/request/history_search", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RequestHistorySearch", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

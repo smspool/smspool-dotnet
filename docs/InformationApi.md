@@ -7,7 +7,9 @@ All URIs are relative to *https://api.smspool.net*
 | [**CountryRetrieveAll**](InformationApi.md#countryretrieveall) | **GET** /country/retrieve_all | Country list |
 | [**PoolRetrieveAll**](InformationApi.md#poolretrieveall) | **POST** /pool/retrieve_all | Pool list |
 | [**PoolRetrieveValid**](InformationApi.md#poolretrievevalid) | **POST** /pool/retrieve_valid | Suggested Pools |
+| [**RequestAutoCountry**](InformationApi.md#requestautocountry) | **POST** /request/auto_country | Pick the best country for a service |
 | [**RequestBalance**](InformationApi.md#requestbalance) | **POST** /request/balance | Balance |
+| [**RequestHistorySearch**](InformationApi.md#requesthistorysearch) | **POST** /request/history_search | History search |
 | [**RequestSuccessRate**](InformationApi.md#requestsuccessrate) | **POST** /request/success_rate | Retrieve country success rates per service |
 | [**RequestSuggestedCountries**](InformationApi.md#requestsuggestedcountries) | **POST** /request/suggested_countries | Suggested Countries |
 | [**ServiceRetrieveAll**](InformationApi.md#serviceretrieveall) | **GET** /service/retrieve_all | Service list |
@@ -299,6 +301,104 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="requestautocountry"></a>
+# **RequestAutoCountry**
+> Object RequestAutoCountry (string service, int? pricingOption = null)
+
+Pick the best country for a service
+
+Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order's \"Pick for me\"). It sends an HTTP POST request to the URL `https://api.smspool.net/request/auto_country`.  Every country with stock is scored on its measured success rate (a country with no order history displays 100% but has nothing to back it up, so it is left out unless no measured country has stock), weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request's IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With `pricing_option=1` the cheapest country within reach of the best score wins instead.  Send `auto_country=1` to `/purchase/sms` to order with the same choice in one call.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using SMSPool.Api;
+using SMSPool.Client;
+using SMSPool.Model;
+
+namespace Example
+{
+    public class RequestAutoCountryExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.smspool.net";
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new InformationApi(httpClient, config, httpClientHandler);
+            var service = "service_example";  // string | Service name or service ID which can be retrieved at the /service/retrieve_all endpoint
+            var pricingOption = 56;  // int? | Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional) 
+
+            try
+            {
+                // Pick the best country for a service
+                Object result = apiInstance.RequestAutoCountry(service, pricingOption);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling InformationApi.RequestAutoCountry: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the RequestAutoCountryWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Pick the best country for a service
+    ApiResponse<Object> response = apiInstance.RequestAutoCountryWithHttpInfo(service, pricingOption);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling InformationApi.RequestAutoCountryWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **service** | **string** | Service name or service ID which can be retrieved at the /service/retrieve_all endpoint |  |
+| **pricingOption** | **int?** | Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. | [optional]  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **400** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="requestbalance"></a>
 # **RequestBalance**
 > Object RequestBalance ()
@@ -392,6 +492,110 @@ This endpoint does not need any parameter.
 | **400** | Error |  -  |
 | **401** | Malformed API key |  -  |
 | **403** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="requesthistorysearch"></a>
+# **RequestHistorySearch**
+> Object RequestHistorySearch (string search, string cursor = null, int? limit = null)
+
+History search
+
+_Not documented yet: the parameters below come straight from the code._
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using SMSPool.Api;
+using SMSPool.Client;
+using SMSPool.Model;
+
+namespace Example
+{
+    public class RequestHistorySearchExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.smspool.net";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new InformationApi(httpClient, config, httpClientHandler);
+            var search = "search_example";  // string | 
+            var cursor = "cursor_example";  // string |  (optional) 
+            var limit = 56;  // int? |  (optional) 
+
+            try
+            {
+                // History search
+                Object result = apiInstance.RequestHistorySearch(search, cursor, limit);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling InformationApi.RequestHistorySearch: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the RequestHistorySearchWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // History search
+    ApiResponse<Object> response = apiInstance.RequestHistorySearchWithHttpInfo(search, cursor, limit);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling InformationApi.RequestHistorySearchWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **search** | **string** |  |  |
+| **cursor** | **string** |  | [optional]  |
+| **limit** | **int?** |  | [optional]  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | JSON response |  -  |
+| **401** | Malformed API key |  -  |
+| **403** | Unknown or revoked API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

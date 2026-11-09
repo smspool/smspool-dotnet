@@ -2,7 +2,6 @@
 api/openapi.yaml
 docs/BusinessApi.md
 docs/CarrierApi.md
-docs/ESIMsApi.md
 docs/InformationApi.md
 docs/PreordersApi.md
 docs/PricingApi.md
@@ -11,7 +10,6 @@ docs/SMSApi.md
 docs/VoucherApi.md
 src/SMSPool/Api/BusinessApi.cs
 src/SMSPool/Api/CarrierApi.cs
-src/SMSPool/Api/ESIMsApi.cs
 src/SMSPool/Api/InformationApi.cs
 src/SMSPool/Api/PreordersApi.cs
 src/SMSPool/Api/PricingApi.cs
