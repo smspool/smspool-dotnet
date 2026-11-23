@@ -113,6 +113,8 @@ No authorization required
 
 Retrieve all pricing
 
+Retrieves prices, optionally filtered by country, service, pool and maximum price (`max_price` is rounded to two decimals).  Without any filter the response is the full catalog (about 20 MB), rebuilt once an hour. It is sent with `ETag`, `Last-Modified` and `Cache-Control` headers: send `If-None-Match` (or `If-Modified-Since`) with your next request and you get `304 Not Modified` with no body while the catalog has not changed.
+
 ### Example
 ```csharp
 using System.Collections.Generic;

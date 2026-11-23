@@ -209,7 +209,7 @@ catch (ApiException e)
 
 <a id="vouchergenerate"></a>
 # **VoucherGenerate**
-> Object VoucherGenerate (decimal amount)
+> Object VoucherGenerate (decimal amount, string idempotencyKey = null)
 
 Generate voucher
 
@@ -238,11 +238,12 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new VoucherApi(httpClient, config, httpClientHandler);
             var amount = 8.14D;  // decimal | The amount per promocode
+            var idempotencyKey = 3f1c2c0e-7d5b-4a52-9a53-1f6f0f0f2b11;  // string |  (optional) 
 
             try
             {
                 // Generate voucher
-                Object result = apiInstance.VoucherGenerate(amount);
+                Object result = apiInstance.VoucherGenerate(amount, idempotencyKey);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -263,7 +264,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Generate voucher
-    ApiResponse<Object> response = apiInstance.VoucherGenerateWithHttpInfo(amount);
+    ApiResponse<Object> response = apiInstance.VoucherGenerateWithHttpInfo(amount, idempotencyKey);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -281,6 +282,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **amount** | **decimal** | The amount per promocode |  |
+| **idempotencyKey** | **string** |  | [optional]  |
 
 ### Return type
 

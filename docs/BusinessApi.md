@@ -217,6 +217,8 @@ catch (ApiException e)
 
 Update
 
+Updates a sub-account. Send only the fields you want to change.  `query` holds the result of each requested change. `success` is 1 only when every one of them succeeded; otherwise it is 0, `failed` lists the fields that were refused and `message` repeats the first refusal.
+
 ### Example
 ```csharp
 using System.Collections.Generic;

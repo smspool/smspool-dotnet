@@ -7,6 +7,7 @@ All URIs are relative to *https://api.smspool.net*
 | [**CountryRetrieveAll**](InformationApi.md#countryretrieveall) | **GET** /country/retrieve_all | Country list |
 | [**PoolRetrieveAll**](InformationApi.md#poolretrieveall) | **POST** /pool/retrieve_all | Pool list |
 | [**PoolRetrieveValid**](InformationApi.md#poolretrievevalid) | **POST** /pool/retrieve_valid | Suggested Pools |
+| [**RequestAutoCountry**](InformationApi.md#requestautocountry) | **POST** /request/auto_country | Pick the best country for a service |
 | [**RequestBalance**](InformationApi.md#requestbalance) | **POST** /request/balance | Balance |
 | [**RequestSuccessRate**](InformationApi.md#requestsuccessrate) | **POST** /request/success_rate | Retrieve country success rates per service |
 | [**RequestSuggestedCountries**](InformationApi.md#requestsuggestedcountries) | **POST** /request/suggested_countries | Suggested Countries |
@@ -299,13 +300,111 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="requestautocountry"></a>
+# **RequestAutoCountry**
+> Object RequestAutoCountry (string service, int? pricingOption = null)
+
+Pick the best country for a service
+
+Returns the country SMSPool would order from for this service when you do not want to choose one (the quick order's \"Pick for me\"). It sends an HTTP POST request to the URL `https://api.smspool.net/request/auto_country`.  Every country with stock is scored on its expected success rate, weighed down when little stock backs it, minus a little per dollar, plus a bonus when it matches the country your request's IP resolves to (a local number verifies more often). The IP country is only used for that comparison; it is neither stored nor returned. Ties go to more stock, then the lower price. With `pricing_option=1` the cheapest country within reach of the best score wins instead.  `success_rate` is that expected rate. Where the service has at least 20 recent orders in the country it is the measured rate and `rate_measured` is true. With fewer, it is an estimate that blends those orders (`rate_orders` of them) with how the country does across all services and how the service does elsewhere, and `rate_measured` is false.  Send `auto_country=1` to `/purchase/sms` to order with the same choice in one call.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using SMSPool.Api;
+using SMSPool.Client;
+using SMSPool.Model;
+
+namespace Example
+{
+    public class RequestAutoCountryExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://api.smspool.net";
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new InformationApi(httpClient, config, httpClientHandler);
+            var service = "service_example";  // string | Service name or service ID which can be retrieved at the /service/retrieve_all endpoint
+            var pricingOption = 56;  // int? | Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. (optional) 
+
+            try
+            {
+                // Pick the best country for a service
+                Object result = apiInstance.RequestAutoCountry(service, pricingOption);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling InformationApi.RequestAutoCountry: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the RequestAutoCountryWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Pick the best country for a service
+    ApiResponse<Object> response = apiInstance.RequestAutoCountryWithHttpInfo(service, pricingOption);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling InformationApi.RequestAutoCountryWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **service** | **string** | Service name or service ID which can be retrieved at the /service/retrieve_all endpoint |  |
+| **pricingOption** | **int?** | Set to 1 to prefer the cheapest country among those close to the best score; 0 (default) picks purely on the score. | [optional]  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/x-www-form-urlencoded
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **400** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="requestbalance"></a>
 # **RequestBalance**
 > Object RequestBalance ()
 
 Balance
 
-This HTTP POST request is used to retrieve the balance for a specific SMSPool. The request is sent to the URL `https://api.smspool.net/request/balance`.  ### Request Parameters  This request require the \\`key\\` param which is your API key  ### Response  The response to this request will have a status code of 200 if the request is successful. The response body will be in JSON format and will include a `balance` field. However, the last execution of this request returned an empty string for the `balance` field.  Please note that the actual value of the `balance` field may vary depending on the user and its configuration.
+Retrieves your account balance in USD.  ### Request Parameters  Only your API key, sent as a bearer token.  ### Response  A JSON object with a `balance` field: the balance as a string with two decimals, for example `\"5.00\"`.
 
 ### Example
 ```csharp
