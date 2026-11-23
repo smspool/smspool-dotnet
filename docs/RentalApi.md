@@ -23,7 +23,7 @@ All URIs are relative to *https://api.smspool.net*
 
 <a id="purchaserental"></a>
 # **PurchaseRental**
-> Object PurchaseRental (int id, int days, int? serviceId = null, int? createToken = null, string city = null, string state = null, string zipcode = null)
+> Object PurchaseRental (int id, int days, string idempotencyKey = null, int? serviceId = null, int? createToken = null, string city = null, string state = null, string zipcode = null)
 
 Order Rental
 
@@ -53,6 +53,7 @@ namespace Example
             var apiInstance = new RentalApi(httpClient, config, httpClientHandler);
             var id = 56;  // int | Rental ID retrieved from Retrieve Rental IDs
             var days = 56;  // int | 
+            var idempotencyKey = 3f1c2c0e-7d5b-4a52-9a53-1f6f0f0f2b11;  // string |  (optional) 
             var serviceId = 56;  // int? | Optional value on which service you'd purchase the rental for (optional) 
             var createToken = 56;  // int? | Create a rental token which allows you to share this specific rental (optional) 
             var city = "city_example";  // string |  (optional) 
@@ -62,7 +63,7 @@ namespace Example
             try
             {
                 // Order Rental
-                Object result = apiInstance.PurchaseRental(id, days, serviceId, createToken, city, state, zipcode);
+                Object result = apiInstance.PurchaseRental(id, days, idempotencyKey, serviceId, createToken, city, state, zipcode);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -83,7 +84,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Order Rental
-    ApiResponse<Object> response = apiInstance.PurchaseRentalWithHttpInfo(id, days, serviceId, createToken, city, state, zipcode);
+    ApiResponse<Object> response = apiInstance.PurchaseRentalWithHttpInfo(id, days, idempotencyKey, serviceId, createToken, city, state, zipcode);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -102,6 +103,7 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **id** | **int** | Rental ID retrieved from Retrieve Rental IDs |  |
 | **days** | **int** |  |  |
+| **idempotencyKey** | **string** |  | [optional]  |
 | **serviceId** | **int?** | Optional value on which service you&#39;d purchase the rental for | [optional]  |
 | **createToken** | **int?** | Create a rental token which allows you to share this specific rental | [optional]  |
 | **city** | **string** |  | [optional]  |
@@ -129,6 +131,7 @@ catch (ApiException e)
 | **400** | Error |  -  |
 | **401** | Malformed API key |  -  |
 | **403** | Unknown or revoked API key |  -  |
+| **409** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1018,6 +1021,8 @@ This endpoint does not need any parameter.
 
 Retrieve Rental Messages
 
+Successful answers are cached for 3 seconds per rental, so polling faster than that returns the same data.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -1305,6 +1310,8 @@ No authorization required
 
 Retrieve Rental Status
 
+Successful answers are cached for 3 seconds per rental, so polling faster than that returns the same data.
+
 ### Example
 ```csharp
 using System.Collections.Generic;
@@ -1523,6 +1530,9 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://api.smspool.net";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
@@ -1582,7 +1592,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -1594,6 +1604,8 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **401** | Malformed API key |  -  |
+| **403** | Unknown or revoked API key |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
